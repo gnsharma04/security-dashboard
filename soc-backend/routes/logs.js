@@ -30,7 +30,7 @@ router.get("/logs", (req, res) => {
     limit,
     total: logs.length,
     totalPages: Math.ceil(logs.length / limit),
-    data: paginatedLogs,
+    logs: paginatedLogs,
   });
 });
 

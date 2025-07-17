@@ -1,7 +1,10 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const logsRouter = require("./routes/logs");
+
+app.use(cors());
 
 app.use("/api", logsRouter);
 
