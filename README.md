@@ -6,7 +6,7 @@ A full-stack, real-time Security Operations Center (SOC) dashboard built with th
 
 ## 🚀 Demo Link
 
-- **Frontend (React)**: https://security-dashboard-frontend-kg2x0hn21.vercel.app/
+- **Frontend (React)**: https://soc-frontend-lemon.vercel.app/
 - **Backend (Node/Express)**: https://security-dashboard-backend-2wa3rz1v7.vercel.app/
 
 ---

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { GET_LOGS } from "../constants/endpoints";
+import { BASE_URL, GET_LOGS } from "../constants/endpoints";
 
 const LogsTable = ({ tableHeaders, keys }) => {
   const [logs, setLogs] = useState([]);
