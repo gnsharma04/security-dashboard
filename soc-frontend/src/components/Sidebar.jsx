@@ -1,13 +1,15 @@
-import { Link, Tooltip } from "@mui/material";
+import { Tooltip } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
 import React, { useState } from "react";
 import { MdMenu } from "react-icons/md";
 import sidebarConstanst from "../constants/Sidebar.Constants";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+
   const toggleDrawer = () => {
     setOpen(!open);
-    console.log("toggle");
   };
 
   return (
@@ -32,6 +34,7 @@ const Sidebar = () => {
               text={item.text}
               open={open}
               path={item.path}
+              active={location.pathname === item.path}
             />
           ))}
         </div>
@@ -55,7 +58,9 @@ const SidebarItem = ({ icon: Icon, text, open, path, onClick, active }) => {
         onClick={onClick}
         className={`flex items-center ${
           open ? "justify-start px-4 gap-4" : "justify-center"
-        } mt-2 py-3 mx-2 rounded-lg text-white transition-all duration-300 hover:bg-blue-200 cursor-pointer`}
+        } mt-2 py-3 mx-2 rounded-lg transition-all duration-300 hover:bg-blue-200 cursor-pointer ${
+          active ? "bg-blue-300" : ""
+        }`}
       >
         <div>
           <Icon className="text-2xl" />

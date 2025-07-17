@@ -19,7 +19,6 @@ const LogsTable = ({ tableHeaders, keys }) => {
       });
 
       if (response.status === 200) {
-        console.log("Logs fetched successfully:", response);
         setLogs(response.data.logs || []);
         setTotalPages(response.data.totalPages || 1);
         toast.success("Logs fetched successfully");

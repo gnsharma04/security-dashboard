@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { GET_EVENT_COUNT } from "../constants/endpoints";
 import { toast } from "react-hot-toast";
+import { colors } from "../constants/barColour.constants";
 
 // Chart.js modules
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -43,9 +44,10 @@ const BarChart = () => {
     labels: Object.keys(eventCounts),
     datasets: [
       {
-        label: "Event Count",
         data: Object.values(eventCounts),
-        backgroundColor: "rgba(59, 130, 246, 0.6)",
+        backgroundColor: Object.values(eventCounts).map(
+          (_, i) => colors[i % colors.length]
+        ),
         borderRadius: 4,
       },
     ],
@@ -54,7 +56,7 @@ const BarChart = () => {
   const chartOptions = {
     responsive: true,
     plugins: {
-      legend: { display: true, position: "top" },
+      legend: { display: false, position: "top" },
     },
     scales: {
       y: {

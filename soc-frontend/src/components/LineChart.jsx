@@ -62,7 +62,7 @@ const LineChart = () => {
         label: "Events Over Time",
         data: Object.values(eventData),
         fill: false,
-        borderColor: "rgba(59, 130, 246, 1)", // Tailwind blue-500
+        borderColor: "rgba(59, 130, 246, 1)",
         tension: 0.3,
         pointRadius: 4,
       },
@@ -72,7 +72,7 @@ const LineChart = () => {
   const chartOptions = {
     responsive: true,
     plugins: {
-      legend: { display: true },
+      legend: { display: false },
     },
     scales: {
       x: {
