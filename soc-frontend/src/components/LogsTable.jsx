@@ -63,7 +63,7 @@ const LogsTable = ({ tableHeaders, keys }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md w-full mt-6">
+    <div>
       <h2 className="text-xl font-semibold mb-4">Log Events</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300">

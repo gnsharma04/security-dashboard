@@ -65,7 +65,7 @@ const BarChart = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-3xl">
+    <div>
       <h2 className="text-xl font-semibold mb-4">Events by Type</h2>
       <Bar data={chartData} options={chartOptions} />
     </div>

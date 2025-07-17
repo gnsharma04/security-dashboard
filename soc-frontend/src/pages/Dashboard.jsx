@@ -7,24 +7,24 @@ import { headers, keys } from "../constants/table.Constants";
 
 const Dashboard = () => {
   return (
-    <Box p={3}>
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+    <div className="p-4 md:p-6 w-full">
+      <div className="flex flex-col lg:flex-row gap-4">
+        {/* Left Half: BarChart and LineChart */}
+        <div className="w-full lg:w-1/2 flex flex-col gap-4">
+          <div className="bg-white rounded-lg shadow-md p-4">
+            <BarChart />
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-4">
+            <LineChart />
+          </div>
+        </div>
 
-      {/* Charts Section */}
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          <BarChart />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <LineChart />
-        </Grid>
-      </Grid>
-
-      {/* Table Section */}
-      <Box mt={4}>
-        <LogsTable tableHeaders={headers} keys={keys} />
-      </Box>
-    </Box>
+        {/* Right Half: LogsTable */}
+        <div className="w-full lg:w-1/2 bg-white rounded-lg shadow-md p-4">
+          <LogsTable tableHeaders={headers} keys={keys} />
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -3,7 +3,7 @@ import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   return (
-    <div className="w-full h-16 bg-white shadow-md flex items-center justify-between px-6 sticky top-0 z-50">
+    <div className="w-full h-full bg-white shadow-md flex items-center justify-between p-5 sticky top-0 z-50">
       <h1 className="text-xl font-semibold text-gray-800">SOC Dashboard</h1>
 
       <div className="relative flex items-center gap-4">

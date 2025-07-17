@@ -11,7 +11,7 @@ const App = () => {
       <Sidebar />
       <Box className="flex flex-col flex-grow bg-gray-100 overflow-y-auto">
         <Header />
-        <Box component="main" className="p-4">
+        <Box component="main" className="p-2">
           <Outlet />
         </Box>
       </Box>
