@@ -4,6 +4,7 @@ import BarChart from "../components/BarChart";
 import LineChart from "../components/LineChart";
 import LogsTable from "../components/LogsTable";
 import { headers, keys } from "../constants/table.Constants";
+import DateRangeFilter from "../components/DateFilter";
 
 const Dashboard = () => {
   return (

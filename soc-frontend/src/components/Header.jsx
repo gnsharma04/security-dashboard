@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import DateFilter from "./DateFilter";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,18 +24,22 @@ const Header = () => {
         Security Operations Center
       </h1>
 
-      <div className="relative" ref={dropdownRef}>
-        <div
-          className="flex items-center gap-1 cursor-pointer"
-          onClick={() => setIsOpen((prev) => !prev)}
-        >
-          <FaUserCircle className="text-3xl text-gray-600" />
-          <span className="text-sm text-gray-600 hidden sm:inline">User</span>
-          <KeyboardArrowDownIcon
-            className={`transition-transform duration-300 ${
-              isOpen ? "rotate-180" : "rotate-0"
-            } text-gray-600`}
-          />
+      <div className="flex items-center">
+        <DateFilter />
+
+        <div className="relative" ref={dropdownRef}>
+          <div
+            className="flex items-center gap-1 cursor-pointer"
+            onClick={() => setIsOpen((prev) => !prev)}
+          >
+            <FaUserCircle className="text-3xl text-gray-600" />
+            <span className="text-sm text-gray-600 hidden sm:inline">User</span>
+            <KeyboardArrowDownIcon
+              className={`transition-transform duration-300 ${
+                isOpen ? "rotate-180" : "rotate-0"
+              } text-gray-600`}
+            />
+          </div>
         </div>
 
         {/* Dropdown Menu */}

@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { BASE_URL, GET_LOGS } from "../constants/endpoints";
+import {
+  dateRangeAtom,
+  formatDateLocale,
+} from "../constants/Sidebar.Constants";
+import { useAtom } from "jotai";
 
 const LogsTable = ({ tableHeaders, keys }) => {
+  const [dateRange] = useAtom(dateRangeAtom);
   const [logs, setLogs] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -11,12 +17,15 @@ const LogsTable = ({ tableHeaders, keys }) => {
 
   const fetchLogs = async () => {
     try {
-      const response = await axios.get(GET_LOGS, {
-        params: {
-          page: page,
-          limit: limit,
-        },
-      });
+      const config = dateRange
+        ? {
+            params: {
+              startDate: formatDateLocale(dateRange.startDate),
+              endDate: formatDateLocale(dateRange.endDate),
+            },
+          }
+        : {};
+      const response = await axios.get(GET_LOGS, config);
 
       if (response.status === 200) {
         setLogs(response.data.logs || []);
@@ -33,7 +42,7 @@ const LogsTable = ({ tableHeaders, keys }) => {
 
   useEffect(() => {
     fetchLogs();
-  }, [page]);
+  }, [page, dateRange]);
 
   const handlePrev = () => {
     if (page > 1) setPage((prev) => prev - 1);

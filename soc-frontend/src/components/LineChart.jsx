@@ -12,8 +12,12 @@ import {
 } from "chart.js";
 import { GET_EVENTS_BY_HOUR } from "../constants/endpoints";
 import { toast } from "react-hot-toast";
+import {
+  dateRangeAtom,
+  formatDateLocale,
+} from "../constants/Sidebar.Constants";
+import { useAtom } from "jotai";
 
-// Register necessary Chart.js components
 ChartJS.register(
   LineElement,
   CategoryScale,
@@ -24,26 +28,35 @@ ChartJS.register(
 );
 
 const LineChart = () => {
+  const [dateRange] = useAtom(dateRangeAtom);
   const [eventData, setEventData] = useState({});
 
-  useEffect(() => {
-    const fetchEventData = async () => {
-      try {
-        const response = await axios.get(GET_EVENTS_BY_HOUR);
-        if (response.status === 200) {
-          setEventData(response.data);
-          toast.success("Events by hour fetched");
-        } else {
-          toast.error(`Failed to fetch: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("LineChart API error:", error);
-        toast.error("Failed to fetch line chart data");
+  const fetchEventData = async () => {
+    try {
+      const config = dateRange
+        ? {
+            params: {
+              startDate: formatDateLocale(dateRange.startDate),
+              endDate: formatDateLocale(dateRange.endDate),
+            },
+          }
+        : {};
+      const response = await axios.get(GET_EVENTS_BY_HOUR, config);
+      if (response.status === 200) {
+        setEventData(response.data);
+        toast.success("Events by hour fetched");
+      } else {
+        toast.error(`Failed to fetch: ${response.status}`);
       }
-    };
+    } catch (error) {
+      console.error("LineChart API error:", error);
+      toast.error("Failed to fetch line chart data");
+    }
+  };
 
+  useEffect(() => {
     fetchEventData();
-  }, []);
+  }, [dateRange]);
 
   const chartData = {
     labels: Object.keys(eventData).map((isoTime) => {
