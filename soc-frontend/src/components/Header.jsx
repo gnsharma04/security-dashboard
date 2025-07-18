@@ -44,7 +44,7 @@ const Header = () => {
 
         {/* Dropdown Menu */}
         <div
-          className={`absolute right-0 mt-2 w-44 bg-white border border-gray-200 shadow-lg rounded-md overflow-hidden transform transition-all duration-200 origin-top ${
+          className={`absolute right-0 mt-40 w-44 bg-white border border-gray-200 shadow-lg rounded-md overflow-hidden transform transition-all duration-200 origin-top ${
             isOpen
               ? "opacity-100 scale-100 visible"
               : "opacity-0 scale-95 invisible"
