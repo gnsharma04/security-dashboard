@@ -46,11 +46,13 @@ const DateRangeFilter = () => {
       endDate: new Date(),
       key: "selection",
     });
+    setDateRange();
+    handleCloseCalendar();
   };
 
   return (
     <>
-      <Tooltip title="Date Range" placement="left" arrow>
+      <Tooltip title="Date Filter" placement="left" arrow>
         <Button
           aria-describedby={id}
           variant="text"

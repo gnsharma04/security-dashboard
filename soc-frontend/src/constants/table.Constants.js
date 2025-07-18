@@ -1,5 +1,6 @@
 const headers = [
   "Timestamp",
+  "Time Ago",
   "Event Type",
   "Username",
   "Source IP",
@@ -7,6 +8,7 @@ const headers = [
 ];
 const keys = [
   "timestamp",
+  "timeAgo",
   "event_type",
   "username",
   "source_ip",

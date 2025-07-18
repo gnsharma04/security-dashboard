@@ -198,5 +198,21 @@
     "source_ip": "203.0.113.1",
     "destination_ip": "10.0.0.5",
     "details": "Synthetic log entry for simulation purposes."
+  },
+  {
+    "timestamp": "2025-07-18T08:30:48",
+    "event_type": "DataExfiltration",
+    "username": "alpha",
+    "source_ip": "103.0.113.1",
+    "destination_ip": "20.0.0.5",
+    "details": "Synthetic log entry for simulation purposes."
+  },
+  {
+    "timestamp": "2025-07-18T12:30:48",
+    "event_type": "PortScan",
+    "username": "golem",
+    "source_ip": "191.0.113.1",
+    "destination_ip": "20.0.0.1",
+    "details": "Synthetic log entry for simulation purposes."
   }
 ]

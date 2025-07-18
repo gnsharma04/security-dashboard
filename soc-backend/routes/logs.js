@@ -1,6 +1,10 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const dayjs = require("dayjs");
+const relativeTime = require("dayjs/plugin/relativeTime");
+
+dayjs.extend(relativeTime);
 
 const router = express.Router();
 
@@ -15,30 +19,70 @@ try {
   console.error("❌ Failed to read log file:", err);
 }
 
+//Date Parser
+function parseDate(dateString) {
+  const [day, month, year] = dateString.split("/").map(Number);
+  return new Date(year, month - 1, day);
+}
+
 // GET /api/logs
 router.get("/logs", (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 20;
+  const { page = 1, limit = 20, startDate, endDate } = req.query;
+  let filteredLogs = [...logs];
 
-  const start = (page - 1) * limit;
-  const end = start + limit;
+  if (startDate && endDate) {
+    const start = parseDate(startDate);
+    start.setHours(0, 0, 0, 0);
 
-  const paginatedLogs = logs.slice(start, end);
+    const end = parseDate(endDate);
+    end.setHours(23, 59, 59, 999);
+
+    filteredLogs = filteredLogs.filter((log) => {
+      const logTime = new Date(log.timestamp);
+      return logTime >= start && logTime <= end;
+    });
+  }
+
+  filteredLogs.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+
+  const pageInt = parseInt(page);
+  const limitInt = parseInt(limit);
+  const startIndex = (pageInt - 1) * limitInt;
+  const paginatedLogs = filteredLogs
+    .slice(startIndex, startIndex + limitInt)
+    .map((log) => ({
+      ...log,
+      timeAgo: dayjs(log.timestamp).fromNow(),
+    }));
 
   res.json({
     page,
     limit,
-    total: logs.length,
-    totalPages: Math.ceil(logs.length / limit),
+    total: filteredLogs.length,
+    totalPages: Math.ceil(filteredLogs.length / limit),
     logs: paginatedLogs,
   });
 });
 
 // GET /api/event-count
 router.get("/event-count", (req, res) => {
+  const { startDate, endDate } = req.query;
+
+  let filteredLogs = logs;
+
+  if (startDate && endDate) {
+    const start = parseDate(startDate);
+    const end = parseDate(endDate);
+
+    filteredLogs = logs.filter((log) => {
+      const logTime = new Date(log.timestamp);
+      return logTime >= start && logTime <= end;
+    });
+  }
+
   const counts = {};
 
-  logs.forEach((log) => {
+  filteredLogs.forEach((log) => {
     const type = log.event_type;
     counts[type] = (counts[type] || 0) + 1;
   });
@@ -48,12 +92,25 @@ router.get("/event-count", (req, res) => {
 
 // GET /api/events-by-hour
 router.get("/events-by-hour", (req, res) => {
+  const { startDate, endDate } = req.query;
+
+  let filteredLogs = logs;
+
+  if (startDate && endDate) {
+    const start = parseDate(startDate);
+    const end = parseDate(endDate);
+
+    filteredLogs = logs.filter((log) => {
+      const logTime = new Date(log.timestamp);
+      return logTime >= start && logTime <= end;
+    });
+  }
+
   const eventsByHour = {};
 
-  logs.forEach((log) => {
+  filteredLogs.forEach((log) => {
     const date = new Date(log.timestamp);
 
-    // Round and formatting as YYYY-MM-DDTHH:00
     const hourKey = `${date.getFullYear()}-${String(
       date.getMonth() + 1
     ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(

@@ -20,11 +20,13 @@ const LogsTable = ({ tableHeaders, keys }) => {
       const config = dateRange
         ? {
             params: {
+              page: page,
+              limit: limit,
               startDate: formatDateLocale(dateRange.startDate),
               endDate: formatDateLocale(dateRange.endDate),
             },
           }
-        : {};
+        : { params: { page: page, limit: limit } };
       const response = await axios.get(GET_LOGS, config);
 
       if (response.status === 200) {
